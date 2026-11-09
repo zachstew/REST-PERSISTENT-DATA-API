@@ -1,0 +1,6 @@
+# Reflection: REST-PERSISTENT-DATA-API
+I built a Flask API that saves each clinical record twice: once in a SQLite database through SQLAlchemy, and once as a line appended to a JSON Lines file. The steps required were to create a virtual environment, install Flask, SQLAlchemy, and Pydantic, then create the `database.py`, `models.py`, `schemas.py`, and `main.py`. I extended the original design with three new columns: `blood_pressure`, `heart_rate`, and `allergies`. Each one had to be added to the model, the schema, the POST handler, and the JSON output.
+
+What surprised me most was how many places one new field touches, and how easy it is to miss one. My code evolved from basic validation to stricter rules, such as a regex for blood pressure (like 120/80) and a default value for allergies. A bad request now returns a clear 400 error instead of saving bad information.
+
+I now understand much better why the JSONL file matters. It works as a simple backup and audit trail that could rebuild the database. I would like to learn more about database migrations, since adding columns to an existing database file requires deleting it or migrating it, as well as adding duplicate detection.
